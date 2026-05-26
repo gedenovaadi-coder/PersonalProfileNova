@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nova Profile</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(168, 85, 247, 0.2),
+            transparent 25%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(126, 34, 206, 0.25),
+            transparent 30%
+          ),
+          linear-gradient(135deg, #0f0518, #1a0c2b, #24103d, #13081f);
+        color: white;
+        overflow-x: hidden;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1400px;
+        margin: auto;
+      }
+
+      /* NAVBAR */
+      nav {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        background: rgba(18, 8, 31, 0.75);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 0;
+        gap: 20px;
+      }
+
+      .logo {
+        font-size: clamp(1.2rem, 2vw, 1.6rem);
+        font-weight: 800;
+        color: #d8b4fe;
+        letter-spacing: 3px;
+        flex-shrink: 0;
+      }
+
+      .menu {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .menu a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+        font-size: clamp(0.9rem, 1vw, 1rem);
+      }
+
+      .menu a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(to right, #c084fc, #9333ea);
+        border-radius: 10px;
+        transition: 0.4s;
+      }
+
+      .menu a:hover::after,
+      .menu a.active::after {
+        width: 100%;
+      }
+
+      /* HERO */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 120px;
+        padding-bottom: 60px;
+      }
+
+      .hero-content {
+        display: grid;
+        grid-template-columns: 1.4fr 0.8fr;
+        gap: clamp(40px, 8vw, 120px);
+        align-items: center;
+      }
+
+      .hero-text {
+        width: 100%;
+      }
+
+      .hero-text h3 {
+        color: #c084fc;
+        letter-spacing: 4px;
+        margin-bottom: 15px;
+        font-size: clamp(0.9rem, 1vw, 1rem);
+      }
+
+      /* NAMA */
+      .hero-text h1 {
+        font-size: clamp(2rem, 5vw, 5.5rem);
+        line-height: 1.15;
+        margin-bottom: 25px;
+
+        background: rgba(255, 255, 255, 0.08);
+        padding: clamp(18px, 2vw, 24px) clamp(20px, 3vw, 35px);
+        border-radius: 24px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        display: inline-block;
+        width: fit-content;
+        max-width: 100%;
+
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .hero-text span {
+        color: #f3e8ff;
+      }
+
+      .hero-text p {
+        color: #d1d5db;
+        line-height: 1.9;
+        margin-bottom: 35px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 15px 35px;
+        background: linear-gradient(135deg, #9333ea, #7e22ce);
+        border-radius: 14px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.4s;
+        font-size: clamp(0.9rem, 1vw, 1rem);
+      }
+
+      .btn:hover {
+        transform: translateY(-6px);
+      }
+
+      /* PROFILE */
+      .profile-card {
+        background: rgba(255, 255, 255, 0.05);
+        padding: clamp(22px, 3vw, 30px);
+        border-radius: 28px;
+        text-align: center;
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        width: 100%;
+        max-width: 340px;
+        margin: auto;
+      }
+
+      .profile-card img {
+        width: clamp(150px, 25vw, 190px);
+        height: clamp(150px, 25vw, 190px);
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid #a855f7;
+        margin: auto;
+      }
+
+      .profile-card h2 {
+        margin-top: 20px;
+        font-size: clamp(1.5rem, 2vw, 1.8rem);
+      }
+
+      .profile-card p {
+        margin-top: 8px;
+        color: #d1d5db;
+        font-size: clamp(0.9rem, 1vw, 1rem);
+      }
+
+      section {
+        padding: 100px 0;
+      }
+
+      .title {
+        text-align: center;
+        font-size: clamp(2rem, 4vw, 3rem);
+        margin-bottom: 70px;
+      }
+
+      .title span {
+        color: #c084fc;
+      }
+
+      /* ABOUT */
+      .about-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.05);
+        padding: clamp(20px, 3vw, 30px);
+        border-radius: 25px;
+        transition: 0.4s ease;
+        width: 100%;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+      }
+
+      .dropdown-card {
+        cursor: pointer;
+      }
+
+      .dropdown-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .dropdown-header h3 {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+      }
+
+      .dropdown-header span {
+        font-size: 1.5rem;
+        color: #c084fc;
+        transition: 0.3s;
+        flex-shrink: 0;
+      }
+
+      .dropdown-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: 0.5s ease;
+      }
+
+      .dropdown-card.active .dropdown-content {
+        max-height: 500px;
+        margin-top: 20px;
+      }
+
+      .dropdown-card.active .dropdown-header span {
+        transform: rotate(45deg);
+      }
+
+      .dropdown-content p {
+        margin-bottom: 12px;
+        color: #d1d5db;
+        line-height: 1.8;
+        word-break: break-word;
+      }
+
+      /* TEKS */
+      .teks-atas,
+      .teks-bawah,
+      .teks-bawahnya {
+        margin-bottom: 25px;
+        color: #d1d5db;
+        line-height: 1.9;
+        font-size: clamp(0.92rem, 1.1vw, 1rem);
+      }
+
+      /* SOCIAL */
+      .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 15px;
+        padding: 14px 18px;
+        border-radius: 14px;
+        text-decoration: none;
+        color: white;
+        background: linear-gradient(135deg, #9333ea, #7e22ce);
+        transition: 0.35s ease;
+        font-weight: 600;
+        flex-wrap: wrap;
+        text-align: center;
+      }
+
+      .social-link:hover {
+        transform: translateY(-6px);
+      }
+
+      .social-img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+      }
+
+      /* SKILLS */
+      .skills {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 20px;
+      }
+
+      .skill-box {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 25px;
+        border-radius: 20px;
+        text-align: center;
+        transition: 0.4s ease;
+      }
+
+      .skill-box:hover {
+        background: linear-gradient(135deg, #9333ea, #7e22ce);
+        transform: scale(1.05);
+      }
+
+      .skill-box h3 {
+        font-size: clamp(1rem, 1.2vw, 1.1rem);
+      }
+
+      /* DESIGN */
+      .design-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+      }
+
+      .design-card {
+        overflow: hidden;
+        border-radius: 28px;
+        position: relative;
+        min-height: 380px;
+        transition: 0.4s ease;
+        cursor: pointer;
+      }
+
+      .design-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .design-card img {
+        width: 100%;
+        height: 100%;
+        min-height: 380px;
+        object-fit: cover;
+        transition: 0.6s;
+      }
+
+      .design-card:hover img {
+        transform: scale(1.1);
+      }
+
+      .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.95),
+          rgba(0, 0, 0, 0.15)
+        );
+        display: flex;
+        align-items: end;
+        padding: 25px;
+      }
+
+      .overlay h3 {
+        font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+        margin-bottom: 10px;
+      }
+
+      .overlay p {
+        color: #d1d5db;
+        line-height: 1.7;
+        font-size: clamp(0.85rem, 1vw, 0.92rem);
+      }
+
+      /* MODAL */
+      .image-modal {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .image-modal img {
+        max-width: 95%;
+        max-height: 90vh;
+        border-radius: 20px;
+        object-fit: contain;
+        animation: zoomIn 0.3s ease;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        font-size: 45px;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .close-modal:hover {
+        color: #c084fc;
+        transform: rotate(90deg);
+      }
+
+      @keyframes zoomIn {
+        from {
+          transform: scale(0.7);
+          opacity: 0;
+        }
+
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      footer {
+        text-align: center;
+        padding: 35px 20px;
+        color: #cbd5e1;
+        font-size: clamp(0.9rem, 1vw, 1rem);
+      }
+
+      /* TABLET */
+      @media (max-width: 992px) {
+        .hero-content {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+
+        .hero {
+          text-align: center;
+        }
+
+        .hero-text h1 {
+          white-space: normal;
+          width: 100%;
+        }
+
+        .profile-card {
+          max-width: 100%;
+        }
+      }
+
+      /* MOBILE */
+      @media (max-width: 768px) {
+        .hero {
+          padding-top: 150px;
+        }
+
+        .navbar {
+          flex-direction: column;
+          gap: 15px;
+          padding: 15px 0;
+        }
+
+        .menu {
+          gap: 15px;
+          width: 100%;
+        }
+
+        .profile-card img {
+          width: 170px;
+          height: 170px;
+        }
+
+        .hero-text h1 {
+          font-size: 2.4rem;
+          white-space: normal;
+        }
+
+        .design-card {
+          min-height: 320px;
+        }
+
+        .design-card img {
+          min-height: 320px;
+        }
+      }
+
+      @media (max-width: 500px) {
+        .container {
+          width: 92%;
+        }
+
+        .menu {
+          justify-content: center;
+        }
+
+        .hero-text h1 {
+          font-size: 2rem;
+          padding: 18px;
+          border-radius: 18px;
+        }
+
+        .card,
+        .profile-card,
+        .skill-box {
+          border-radius: 20px;
+        }
+
+        .close-modal {
+          right: 20px;
+          font-size: 38px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <nav>
+      <div class="container navbar">
+        <div class="logo">NOVA</div>
+
+        <div class="menu">
+          <a href="#home">Home</a>
+          <a href="#about">About Me</a>
+          <a href="#skills">Skill</a>
+          <a href="#design">My Design</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="container hero-content">
+        <div class="hero-text">
+          <h3>PERSONAL PROFILE</h3>
+
+          <h1>I GEDE <span>NOVA ADI</span> WIJAYAGUNA</h1>
+
+          <div class="teks-atas">
+            Saya berasal dari Tabanan dan memiliki ketertarikan besar di dunia
+            desain grafis, khususnya desain fashion dan visual kreatif. Saat ini
+            saya adalah seorang Mahasiswa,yang emimiliki ketertarikan sebagai Designer T-Shirt yang berfokus pada pembuatan
+            desain aesthetic, modern, dan menarik, dengan mengutamakan perpaduan
+            warna, tipografi, serta konsep visual yang unik.
+          </div>
+
+          <div class="teks-bawah">
+            Saya senang menciptakan desain yang tidak hanya terlihat keren,
+            tetapi juga mampu mengikuti tren fashion dan mudah diterima oleh
+            berbagai kalangan.
+          </div>
+
+          <div class="teks-bawahnya">
+            Bagi saya, desain bukan hanya sekadar gambar, tetapi juga cara untuk
+            menyampaikan ide, gaya, dan identitas melalui sebuah karya visual
+            yang menarik dan bermakna.
+          </div>
+
+          <a href="#design" class="btn">Lihat Desain</a>
+        </div>
+
+        <div class="profile-card">
+          <img src="Profile.jpg" alt="Nova" />
+
+          <h2>Nova Adi</h2>
+
+          <p>T-Shirt Designer</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <h2 class="title">Tentang <span>Saya</span></h2>
+
+        <div class="about-grid">
+          <div class="card dropdown-card">
+            <div class="dropdown-header">
+              <h3>📌 Data Diri</h3>
+              <span>+</span>
+            </div>
+
+            <div class="dropdown-content">
+              <p><b>Nama :</b> I GEDE NOVA ADI WIJAYAGUNA</p>
+              <p><b>Alamat :</b> Selemadeg Timur, Tabanan, Bali</p>
+              <p><b>Hobi :</b> Desain Grafis & Eksplorasi Visual</p>
+              <p><b>Pekerjaan :</b> T-Shirt Designer</p>
+            </div>
+          </div>
+
+          <div class="card dropdown-card">
+            <div class="dropdown-header">
+              <h3>📞 Kontak</h3>
+              <span>+</span>
+            </div>
+
+            <div class="dropdown-content">
+              <a
+                href="https://wa.me/6285737630544"
+                target="_blank"
+                class="social-link"
+              >
+                <img src="wa.png" alt="WhatsApp" class="social-img" />
+
+                WhatsApp Saya
+              </a>
+            </div>
+          </div>
+
+          <div class="card dropdown-card">
+            <div class="dropdown-header">
+              <h3>🌐 Media Sosial</h3>
+              <span>+</span>
+            </div>
+
+            <div class="dropdown-content">
+              <a
+                href="https://instagram.com/denova_ady"
+                target="_blank"
+                class="social-link"
+              >
+                <img src="ig.png" alt="Instagram" class="social-img" />
+
+                Instagram
+              </a>
+
+              <a
+                href="https://tiktok.com/@matcha_or_americano"
+                target="_blank"
+                class="social-link"
+              >
+                <img src="tiktok.png" alt="TikTok" class="social-img" />
+
+                TikTok
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="container">
+        <h2 class="title">My <span>Skills</span></h2>
+
+        <div class="skills">
+          <div class="skill-box">
+            <h3>Design Grafis</h3>
+          </div>
+
+          <div class="skill-box">
+            <h3>Design T-Shirt</h3>
+          </div>
+
+          <div class="skill-box">
+            <h3>Service Computer</h3>
+          </div>
+
+          <div class="skill-box">
+            <h3>Pasang CCTV</h3>
+          </div>
+
+          <div class="skill-box">
+            <h3>Jaringan</h3>
+          </div>
+
+          <div class="skill-box">
+            <h3>Fiber Optik</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESAIN -->
+    <section id="design">
+      <div class="container">
+        <h2 class="title">Desain <span>Saya</span></h2>
+
+        <div class="design-grid">
+          <div class="design-card">
+            <img src="1.png" alt="Design 1" class="preview-img" />
+
+            <div class="overlay">
+              <div>
+                <h3>Streetwear Design</h3>
+
+                <p>
+                  Desain streetwear modern dengan nuansa urban dan warna
+                  aesthetic untuk fashion anak muda.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="design-card">
+            <img src="2.png" alt="Design 2" class="preview-img" />
+
+            <div class="overlay">
+              <div>
+                <h3>Eye's Secukupnya Hindia Design</h3>
+
+                <p>
+                  Konsep desain minimalis dengan typography sederhana namun
+                  tetap terlihat premium.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="design-card">
+            <img src="3.png" alt="Design 3" class="preview-img" />
+
+            <div class="overlay">
+              <div>
+                <h3>Hindia X Vaa Design</h3>
+
+                <p>
+                  Desain fashion modern dengan visual kreatif dan sentuhan
+                  aesthetic yang unik.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="image-modal" id="imageModal">
+      <span class="close-modal" id="closeModal">&times;</span>
+
+      <img id="modalImg" src="" />
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>Personal Profile | Design by Nova</p>
+    </footer>
+
+    <script>
+      // DROPDOWN
+      const dropdownCards = document.querySelectorAll(".dropdown-card");
+
+      dropdownCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          card.classList.toggle("active");
+        });
+      });
+
+      // FULL IMAGE MODAL
+      const previewImages = document.querySelectorAll(".preview-img");
+      const imageModal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("modalImg");
+      const closeModal = document.getElementById("closeModal");
+
+      previewImages.forEach((img) => {
+        img.addEventListener("click", () => {
+          imageModal.style.display = "flex";
+          modalImg.src = img.src;
+        });
+      });
+
+      // CLOSE BUTTON
+      closeModal.addEventListener("click", () => {
+        imageModal.style.display = "none";
+      });
+
+      // CLICK OUTSIDE IMAGE
+      imageModal.addEventListener("click", (e) => {
+        if (e.target !== modalImg) {
+          imageModal.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>
